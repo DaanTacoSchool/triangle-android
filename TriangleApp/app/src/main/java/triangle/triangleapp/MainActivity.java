@@ -6,6 +6,9 @@ import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.media.MediaRecorder.OnInfoListener;
+import android.net.LocalServerSocket;
+import android.net.LocalSocket;
+import android.net.LocalSocketAddress;
 import android.net.Uri;
 
 import android.os.Bundle;
@@ -38,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    if (checkCameraHardware(this)) {
+    if (CameraHelper.checkCameraHardware(this)) {
       // Create an instance of Camera
       mCamera = CameraHelper.getCameraInstance();
 
@@ -63,49 +66,29 @@ public class MainActivity extends AppCompatActivity {
     releaseCamera();              // release the camera immediately on pause event
   }
 
-  /** Check if this device has a camera */
-  private boolean checkCameraHardware(Context context) {
-    // this device has a camera
-    // no camera on this device
-    return context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
-  }
-
   private void record() {
     if (isRecording) {
-      // stop recording and release camera
-      mMediaRecorder.stop();  // stop the recording
-      releaseMediaRecorder(); // release the MediaRecorder object
-      mCamera.lock();         // take camera access back from MediaRecorder
 
       // inform the user that recording has stopped
       captureButton.setText("Capture");
       isRecording = false;
+      stopStreaming(true);
     } else {
-      // initialize video camera
-      if (prepareVideoRecorder()) {
-        // Camera is available and unlocked, MediaRecorder is prepared,
-        // now you can start recording
-        mMediaRecorder.start();
-
-        // inform the user that recording has started
-        captureButton.setText("Stop");
-        isRecording = true;
-      } else {
-        // prepare didn't work, release the camera
-        releaseMediaRecorder();
-        // inform user
-      }
+      captureButton.setText("Stop");
+      // Start the stream
+      startStreaming(true);
     }
   }
 
-  private boolean prepareVideoRecorder() {
+  private void initializeVideoRecorder(boolean firstInit) {
+    if (firstInit) {
+      mCamera = CameraHelper.getCameraInstance();
+      mMediaRecorder = new MediaRecorder();
 
-    mCamera = CameraHelper.getCameraInstance();
-    mMediaRecorder = new MediaRecorder();
-
-    // Step 1: Unlock and set camera to MediaRecorder
-    mCamera.unlock();
-    mMediaRecorder.setCamera(mCamera);
+      // Step 1: Unlock and set camera to MediaRecorder
+      mCamera.unlock();
+      mMediaRecorder.setCamera(mCamera);
+    }
 
     // Step 2: Set sources
     mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
@@ -117,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
     // Step 4: Set output file
     final String fileName = getOutputMediaFile(MEDIA_TYPE_VIDEO).toString();
     mMediaRecorder.setOutputFile(fileName);
+    mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
 
     // Step 5: Set the preview output
     mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
@@ -124,8 +108,8 @@ public class MainActivity extends AppCompatActivity {
       @Override public void onInfo(MediaRecorder mr, int what, int extra) {
         // Handle the on duration exceeded
         if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
-          record();
-          record();
+          stopStreaming(false);
+          startStreaming(true);
 
           if (websocketConnected) {
             File file = new File(fileName);
@@ -154,8 +138,16 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    mMediaRecorder.setMaxDuration(1000);
+    mMediaRecorder.setOnErrorListener(new MediaRecorder.OnErrorListener() {
+      @Override public void onError(MediaRecorder mediaRecorder, int what, int extra) {
+        Log.d(TAG, "Error in mediarecorder, " + what + ", " + extra);
+      }
+    });
 
+    mMediaRecorder.setMaxDuration(2000);
+  }
+
+  private boolean prepareVideoRecorder() {
     // Step 6: Prepare configured MediaRecorder
     try {
       mMediaRecorder.prepare();
@@ -205,10 +197,38 @@ public class MainActivity extends AppCompatActivity {
         });
   }
 
+  private void startStreaming(boolean firstStart) {
+    initializeVideoRecorder(firstStart);
+
+    if (!prepareVideoRecorder()) {
+      releaseMediaRecorder();
+      return;
+    }
+
+    try {
+      mMediaRecorder.start();
+    } catch (Exception ex) {
+      Log.e(TAG, "Error during start", ex);
+    }
+    // inform the user that recording has started
+    isRecording = true;
+  }
+
+  private void stopStreaming(boolean fullStop) {
+    // stop recording and release camera
+    mMediaRecorder.stop();  // stop the recording
+    mMediaRecorder.reset();
+    if (fullStop) {
+      releaseMediaRecorder(); // release the MediaRecorder object
+    }
+    mCamera.lock();         // take camera access back from MediaRecorder
+  }
+
   public static final int MEDIA_TYPE_IMAGE = 1;
   public static final int MEDIA_TYPE_VIDEO = 2;
 
   /** Create a file Uri for saving an image or video */
+
   private static Uri getOutputMediaFileUri(int type) {
     return Uri.fromFile(getOutputMediaFile(type));
   }
