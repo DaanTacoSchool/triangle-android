@@ -9,21 +9,24 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="triangle.triangleapp.MainActivity"
-    >
+    tools:context="triangle.triangleapp.MainActivity">
 
   <FrameLayout
       android:id="@+id/camera_preview"
-      android:layout_width="0dp"
-      android:layout_height="fill_parent"
-      android:layout_weight="1"
-      />
+      android:layout_width="match_parent"
+      android:layout_height="386dp"
+      android:layout_weight="0.93" />
 
   <Button
       android:id="@+id/button_capture"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:text="Capture"
-      />
+      android:text="Capture" />
+
+  <Button
+      android:id="@+id/button_switchCamera"
+      android:layout_width="82dp"
+      android:layout_height="65dp"
+      android:text="switch camera" />
 </LinearLayout>

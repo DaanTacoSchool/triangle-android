@@ -23,4 +23,5 @@ public class ExampleInstrumentedTest {
 
         assertEquals("triangle.triangleapp", appContext.getPackageName());
     }
+
 }
