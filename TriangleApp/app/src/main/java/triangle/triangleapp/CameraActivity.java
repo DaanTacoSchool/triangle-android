@@ -30,15 +30,15 @@ import java.util.Date;
 
 public class CameraActivity extends AppCompatActivity {
     private String TAG = "MainActivity";
-    private Camera mCamera;
     private CameraPreview mPreview;
-    private MediaRecorder mMediaRecorder;
-   // private boolean recording = false;
+    private Context myContext;
     private Button captureButton,switchCamera;
+    private Camera mCamera;//required
+    //below variables are required
+    private MediaRecorder mMediaRecorder;
     private boolean websocketConnected = false;
     private WebSocket mWebSocketInstance;
     private int camId;
-    private Context myContext;
     private boolean cameraFront = false;
     private CameraHelper ch=  new CameraHelper();
 
@@ -69,14 +69,12 @@ public class CameraActivity extends AppCompatActivity {
        ch.resume(myContext);
     }
 
-    View.OnClickListener switchCameraListener = new View.OnClickListener() {
+    View.OnClickListener switchCameraListener = new View.OnClickListener(){
         @Override
         public void onClick(View v) {
             if (!recording) {
                 int camerasNumber = Camera.getNumberOfCameras();
                 if (camerasNumber > 1) {
-                    // release the old camera instance
-                    // switch camera, from the front and the back and vice versa
                     ch.releaseCamera();
                     ch.chooseCamera();
                 } else {
@@ -95,112 +93,7 @@ public class CameraActivity extends AppCompatActivity {
     boolean recording = false;
     View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
-        public void onClick(View v) {
-            //TODO: catching exceptions
-           ch.startStopRecording(myContext);
-        }
-    };
-    //MARKER: old code
-
-//  private boolean prepareVideoRecorder() {
-//
-//   // mCamera = ch.getCameraInstance();
-//    mMediaRecorder = new MediaRecorder();
-//
-//    // Step 1: Unlock and set camera to MediaRecorder
-//    mCamera.unlock();
-//    mMediaRecorder.setCamera(mCamera);
-//
-//    // Step 2: Set sources
-//    mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
-//    mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-//
-//    if(CamcorderProfile.hasProfile(camId,1)){
-//     // mMediaRecorder.setProfile(CamcorderProfile.get(camId,1));//old
-//
-//
-//      try {
-//        mMediaRecorder.setProfile(CamcorderProfile.get(camId, CamcorderProfile.QUALITY_480P));
-//      }catch (Exception e){
-//        Log.e(TAG,"480p not found for selected cam");
-//      }
-//
-//
-//    }else{
-//     // mMediaRecorder.setProfile(CamcorderProfile.get(camId,CamcorderProfile.QUALITY_480P));
-//      //TODO: Try-catch
-//      try {
-//        mMediaRecorder.setProfile(CamcorderProfile.get(camId, CamcorderProfile.QUALITY_HIGH));//Highest possible quality
-//      }catch (Exception e){
-//        Log.e(TAG,"quality error");
-//      }
-//
-//    }
-//
-//    // Step 3: Set a CamcorderProfile (requires API Level 8 or higher)
-//   // mMediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_480P));
-//
-//    // Step 4: Set output file
-//    final String fileName = getOutputMediaFile(MEDIA_TYPE_VIDEO).toString();
-//    mMediaRecorder.setOutputFile(fileName);
-//
-//    // The below part is unchanged
-//    // Step 5: Set the preview output
-//    mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
-//    mMediaRecorder.setOnInfoListener(new OnInfoListener() {
-//      @Override public void onInfo(MediaRecorder mr, int what, int extra) {
-//        // Handle the on duration exceeded
-//        if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
-//
-//
-//          if (websocketConnected) {
-//            File file = new File(fileName);
-//
-//            int size = (int) file.length();
-//            byte bytes[] = new byte[size];
-//            byte tmpBuff[] = new byte[size];
-//            try {
-//              FileInputStream fis = new FileInputStream(file);
-//
-//              int read = fis.read(bytes, 0, size);
-//              if (read < size) {
-//                int remain = size - read;
-//                while (remain > 0) {
-//                  read = fis.read(tmpBuff, 0, remain);
-//                  System.arraycopy(tmpBuff, 0, bytes, size - remain, read);
-//                  remain -= read;
-//                }
-//              }
-//            } catch (IOException e) {
-//              Log.e(TAG, "IoExc", e);
-//            }
-//            mWebSocketInstance.send(bytes);
-//          }
-//        }
-//      }
-//    });
-//
-//    mMediaRecorder.setMaxDuration(1000);
-//
-//    // Step 6: Prepare configured MediaRecorder
-//    try {
-//      mMediaRecorder.prepare();
-//    } catch (IllegalStateException e) {
-//      Log.e(TAG, "IllegalStateException preparing MediaRecorder", e);
-//      releaseMediaRecorder();
-//      return false;
-//    } catch (IOException e) {
-//      Log.e(TAG, "IOException preparing MediaRecorder", e);
-//      releaseMediaRecorder();
-//      return false;
-//    }
-//    return true;
-//  }
-
-
-
-    //MARKER: above new, below old
-    /** Check if this device has a camera */
+        public void onClick(View v) {ch.startStopRecording(myContext);}};
     private boolean checkCameraHardware(Context context) {
         // this device has a camera
         // no camera on this device
