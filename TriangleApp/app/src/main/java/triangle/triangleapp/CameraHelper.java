@@ -26,20 +26,20 @@ import java.util.Date;
  */
 
 public class CameraHelper {
-    private static String TAG = "MainActivity";
-    private static Camera mCamera;
-    private static CameraPreview mPreview;
-    private static MediaRecorder mMediaRecorder;
-    private static boolean recording = false;
-    private static int camId;
-    private static boolean cameraFront = false;
-    public static final int MEDIA_TYPE_IMAGE = 1;
-    public static final int MEDIA_TYPE_VIDEO = 2;
+    private   String TAG = "MainActivity";
+    private   Camera mCamera;
+    private   CameraPreview mPreview;
+    private   MediaRecorder mMediaRecorder;
+    private   boolean recording = false;
+    private   int camId;
+    private   boolean cameraFront = false;
+    public   final int MEDIA_TYPE_IMAGE = 1;
+    public   final int MEDIA_TYPE_VIDEO = 2;
 
-    public static void setCameraPreview(CameraPreview cp){
+    public   void setCameraPreview(CameraPreview cp){
         mPreview = cp;
     }
-    private static int findFrontFacingCamera() {
+    private   int findFrontFacingCamera() {
         int cameraId = -1;
         // Search for the front facing camera
         int numberOfCameras = Camera.getNumberOfCameras();
@@ -55,7 +55,7 @@ public class CameraHelper {
         camId=cameraId;
         return cameraId;
     }
-    private static int findBackFacingCamera() {
+    private   int findBackFacingCamera() {
         int cameraId = -1;
         // Search for the back facing camera
         // get the number of cameras
@@ -73,7 +73,7 @@ public class CameraHelper {
         camId=cameraId;
         return cameraId;
     }
-    public static void resume(Context c){
+    public   void resume(Context c){
         if (!hasCamera(c)) {
             Toast toast = Toast.makeText(c, "Sorry, your phone does not have a camera!", Toast.LENGTH_LONG);
             toast.show();
@@ -89,7 +89,7 @@ public class CameraHelper {
             mPreview.refreshCamera(mCamera);
         }
     }
-    public static void chooseCamera() {
+    public   void chooseCamera() {
         // if the camera preview is the front
         if (cameraFront) {
             int cameraId = findBackFacingCamera();
@@ -115,7 +115,7 @@ public class CameraHelper {
             }
         }
     }
-    public static void releaseMediaRecorder() {
+    public   void releaseMediaRecorder() {
         if (mMediaRecorder != null) {
             mMediaRecorder.reset();   // clear recorder configuration
             mMediaRecorder.release(); // release the recorder object
@@ -123,13 +123,13 @@ public class CameraHelper {
             mCamera.lock();           // lock camera for later use
         }
     }
-    public static void releaseCamera() {
+    public   void releaseCamera() {
         if (mCamera != null) {
             mCamera.release();        // release the camera for other applications
             mCamera = null;
         }
     }
-    private static boolean hasCamera(Context context) {
+    private   boolean hasCamera(Context context) {
         // check if the device has camera
         if (context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) {
             return true;
@@ -138,7 +138,7 @@ public class CameraHelper {
         }
     }
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
-    public static boolean prepareMediaRecorder() {
+    public   boolean prepareMediaRecorder() {
 
         mMediaRecorder = new MediaRecorder();
 
@@ -183,7 +183,7 @@ public class CameraHelper {
         return true;
 
     }
-    public static void startStopRecording(Context c){
+    public   void startStopRecording(Context c){
         if (recording) {
             // stop recording and release camera
             mMediaRecorder.stop(); // stop the recording
@@ -213,10 +213,10 @@ public class CameraHelper {
     }
 
     //TODO: this COULD be placed in own helper.. if you are nitpicky that is.
-    private static Uri getOutputMediaFileUri(int type) {
+    private   Uri getOutputMediaFileUri(int type) {
         return Uri.fromFile(getOutputMediaFile(type));
     }
-    private static File getOutputMediaFile(int type) {
+    private   File getOutputMediaFile(int type) {
         // To be safe, you should check that the SDCard is mounted
         // using Environment.getExternalStorageState() before doing this.
 

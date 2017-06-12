@@ -40,6 +40,7 @@ public class CameraActivity extends AppCompatActivity {
     private int camId;
     private Context myContext;
     private boolean cameraFront = false;
+    private CameraHelper ch=  new CameraHelper();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class CameraActivity extends AppCompatActivity {
             mPreview = new CameraPreview(this, mCamera);
             FrameLayout preview = (FrameLayout) findViewById(R.id.camera_preview);
             preview.addView(mPreview);
-            CameraHelper.setCameraPreview(mPreview);
+            ch.setCameraPreview(mPreview);
             captureButton = (Button) findViewById(R.id.button_capture);
             captureButton.setOnClickListener(captureListener);
             switchCamera = (Button) findViewById(R.id.button_switchCamera);
@@ -65,7 +66,7 @@ public class CameraActivity extends AppCompatActivity {
     }
     public void onResume() {
         super.onResume();
-       CameraHelper.resume(myContext);
+       ch.resume(myContext);
     }
 
     View.OnClickListener switchCameraListener = new View.OnClickListener() {
@@ -76,8 +77,8 @@ public class CameraActivity extends AppCompatActivity {
                 if (camerasNumber > 1) {
                     // release the old camera instance
                     // switch camera, from the front and the back and vice versa
-                    CameraHelper.releaseCamera();
-                    CameraHelper.chooseCamera();
+                    ch.releaseCamera();
+                    ch.chooseCamera();
                 } else {
                     Toast toast = Toast.makeText(myContext, "Sorry, your phone has only one camera!", Toast.LENGTH_LONG);
                     toast.show();
@@ -88,22 +89,22 @@ public class CameraActivity extends AppCompatActivity {
 
     @Override protected void onPause() {
         super.onPause();
-        CameraHelper.releaseMediaRecorder();       // if you are using MediaRecorder, release it first
-        CameraHelper.releaseCamera();              // release the camera immediately on pause event
+        ch.releaseMediaRecorder();       // if you are using MediaRecorder, release it first
+        ch.releaseCamera();              // release the camera immediately on pause event
     }
     boolean recording = false;
     View.OnClickListener captureListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             //TODO: catching exceptions
-           CameraHelper.startStopRecording(myContext);
+           ch.startStopRecording(myContext);
         }
     };
     //MARKER: old code
 
 //  private boolean prepareVideoRecorder() {
 //
-//   // mCamera = CameraHelper.getCameraInstance();
+//   // mCamera = ch.getCameraInstance();
 //    mMediaRecorder = new MediaRecorder();
 //
 //    // Step 1: Unlock and set camera to MediaRecorder
