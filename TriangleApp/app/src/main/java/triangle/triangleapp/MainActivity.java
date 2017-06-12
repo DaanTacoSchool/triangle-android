@@ -26,7 +26,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-
 public class MainActivity extends AppCompatActivity {
   private String TAG = "MainActivity";
   private Camera mCamera;
@@ -100,7 +99,6 @@ public class MainActivity extends AppCompatActivity {
     // Step 4: Set output file
     final String fileName = getOutputMediaFile(MEDIA_TYPE_VIDEO).toString();
     mMediaRecorder.setOutputFile(fileName);
-    mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
 
     // Step 5: Set the preview output
     mMediaRecorder.setPreviewDisplay(mPreview.getHolder().getSurface());
@@ -133,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
               Log.e(TAG, "IoExc", e);
             }
             mWebSocketInstance.send(bytes);
+            file.delete();
           }
         }
       }
@@ -144,7 +143,7 @@ public class MainActivity extends AppCompatActivity {
       }
     });
 
-    mMediaRecorder.setMaxDuration(2000);
+    mMediaRecorder.setMaxDuration(5000);
   }
 
   private boolean prepareVideoRecorder() {
