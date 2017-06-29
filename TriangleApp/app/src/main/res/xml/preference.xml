@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:key="category_identity"
+        android:title="@string/category_id">
+
+        <EditTextPreference
+            android:defaultValue="Anoniem"
+            android:dialogMessage="@string/username_dialog_message"
+            android:dialogTitle="@string/display_name"
+            android:key="username"
+            android:summary="@string/username_summary"
+            android:title="@string/display_name"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_security"
+        android:title="@string/category_sec">
+
+        <EditTextPreference
+            android:defaultValue="RSA"
+            android:dialogMessage="@string/key_algorithm_dialog_message"
+            android:dialogTitle="@string/key_algorithm_dialog_title"
+            android:key="key_algorithm"
+            android:summary="@string/key_algorithm_summary"
+            android:title="@string/key_algorithm_title"/>
+        <EditTextPreference
+            android:defaultValue="SHA1withRSA"
+            android:dialogMessage="@string/sign_algorithm_dialog_message"
+            android:dialogTitle="@string/sign_algorithm_dialog_title"
+            android:key="sign_algorithm"
+            android:summary="@string/sign_algorithm_summary"
+            android:title="@string/sign_algorithm_title"/>
+        <EditTextPreference
+            android:defaultValue="1024"
+            android:dialogMessage="@string/key_size_dialog_message"
+            android:dialogTitle="@string/key_size_dialog_title"
+            android:key="key_size"
+            android:numeric="integer"
+            android:summary="@string/key_size_summary"
+            android:title="@string/key_size_title"/>
+        <EditTextPreference
+            android:defaultValue="TriangleKey"
+            android:dialogMessage="@string/key_alias_dialog_message"
+            android:dialogTitle="@string/key_alias_dialog_title"
+            android:key="key_alias"
+            android:summary="@string/key_alias_summary"
+            android:title="@string/key_alias_title"/>
+        <EditTextPreference
+            android:defaultValue="AndroidKeyStore"
+            android:dialogMessage="@string/key_store_dialog_message"
+            android:dialogTitle="@string/key_store_dialog_title"
+            android:key="key_store"
+            android:summary="@string/key_store_summary"
+            android:title="@string/key_store_title"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_connection"
+        android:title="@string/category_con">
+
+        <EditTextPreference
+            android:key="webapi_destination_address"
+            android:title="@string/webapi_destination_address_title"
+            android:summary="@string/webapi_destination_address_summary"
+            android:dialogTitle="@string/webapi_destination_address_dialog_title"
+            android:dialogMessage="@string/webapi_destination_address_dialog_message"
+            android:defaultValue="http://145.49.35.215:5000/api/"/>
+
+        <EditTextPreference
+            android:defaultValue="ws://145.49.35.215:5000/chat/"
+            android:dialogMessage="@string/chat_address_dialog_message"
+            android:dialogTitle="@string/chat_address"
+            android:key="chat_address"
+            android:summary="@string/chat_address_summary"
+            android:title="@string/chat_address"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="category_device"
+        android:title="@string/category_dev">
+
+        <EditTextPreference
+            android:defaultValue="TriangleApp"
+            android:dialogMessage="@string/file_helper_save_location_dialog_message"
+            android:dialogTitle="@string/file_helper_save_location_dialog_title"
+            android:key="file_helper_save_location"
+            android:summary="@string/file_helper_save_location_summary"
+            android:title="@string/file_helper_save_location_title"/>
+
+
+        <ListPreference
+            android:entries="@array/record_length_keys"
+            android:entryValues="@array/record_length_values"
+            android:key="max_record_duration"
+            android:summary="@string/max_recording_duration_summary"
+            android:title="@string/max_recording_duration_title"/>
+
+
+        <EditTextPreference
+            android:defaultValue="90"
+            android:dialogMessage="@string/display_orientation_dialog_message"
+            android:dialogTitle="@string/display_orientation_dialog_title"
+            android:key="display_orientation"
+            android:numeric="integer"
+            android:summary="@string/display_orientation_summary"
+            android:title="@string/display_orientation_title"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

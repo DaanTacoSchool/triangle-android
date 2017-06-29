@@ -1,3 +1,72 @@
 <resources>
     <string name="app_name">TriangleApp</string>
+
+    <string name="permission_denied_error_title">Some required permissions were denied. Please grant the required permissions to use this application.</string>
+    <string name="permission_cancel">Cancel</string>
+    <string name="permission_grant">Grant</string>
+    <string name="permission_request">Permissions</string>
+    <string name="permissions_required">"The asked permissions are required for this app to work."</string>
+    <string name="btn_start_streaming">Start streaming</string>
+    <string name="btn_stop_streaming">Stop streaming</string>
+    <string name="notify_streaming_stopped">Streaming stopped</string>
+    <string name="notify_streaming_started">Streaming started</string>
+    <string name="notify_connected">Connection established</string>
+    <string name="notify_disconnected">No internet connection</string>
+    <string name="camera_start">Start Camera</string>
+    <string name="close_app">Close App</string>
+    <string name="settings">Settings</string>
+    <string name="category_id">Identity</string>
+    <string name="display_name">Display name</string>
+    <string name="username_summary">This will be shown to other users</string>
+    <string name="username_dialog_message">Fill in your name that will be shown to viewers.</string>
+    <string name="category_sec">Security</string>
+    <string name="key_algorithm_title">Key algorithm</string>
+    <string name="key_algorithm_summary">Set the algorithm used for key encryption</string>
+    <string name="key_algorithm_dialog_title">Key algorithm</string>
+    <string name="key_algorithm_dialog_message">Fill in a valid algorithm</string>
+    <string name="sign_algorithm_title">Signing algoritm</string>
+    <string name="sign_algorithm_summary">Set the algorithm used for signing</string>
+    <string name="sign_algorithm_dialog_title">Sign algorithm</string>
+    <string name="sign_algorithm_dialog_message">Fill in a valid algorithm</string>
+    <string name="key_size_title">Key size</string>
+    <string name="key_size_summary">Set the size of the key</string>
+    <string name="key_size_dialog_title">Key size</string>
+    <string name="key_size_dialog_message">Fill in the size of the key</string>
+    <string name="key_alias_title">Key alias</string>
+    <string name="key_alias_summary">Set the key alias</string>
+    <string name="key_alias_dialog_title">Key alias</string>
+    <string name="key_alias_dialog_message">Fill in the alias of the key</string>
+    <string name="key_store_title">Key store</string>
+    <string name="key_store_summary">Set the key store name</string>
+    <string name="key_store_dialog_title">Key store</string>
+    <string name="key_store_dialog_message">Fill in the name of the keystore</string>
+    <string name="category_con">Connection</string>
+    <string name="webapi_destination_address_title">Streaming server adress</string>
+    <string name="webapi_destination_address_summary">Fill in the address of the server you want to connect..</string>
+    <string name="webapi_destination_address_dialog_title">Streaming server address</string>
+    <string name="webapi_destination_address_dialog_message">Fill in a valid destination address</string>
+    <string name="category_dev">Device</string>
+    <string name="file_helper_save_location_title">Workey_sizepace</string>
+    <string name="file_helper_save_location_summary">The app uses this folder for sign_algorithmving</string>
+    <string name="file_helper_save_location_dialog_title">Workey_sizepace location</string>
+    <string name="file_helper_save_location_dialog_message">Fill in a valid foldername</string>
+    <string name="max_recording_duration_title">Record duration</string>
+    <string name="max_recording_duration_summary">Sets the length of the recording chunkey_size</string>
+    <string name="display_orientation_title">Display orientation</string>
+    <string name="display_orientation_summary">Set the rotation of the camera</string>
+    <string name="display_orientation_dialog_title">Display orientation</string>
+    <string name="display_orientation_dialog_message">set the amount of degrees the camera should rotate</string>
+    <string name="chat_address">Chat Address</string>
+    <string name="chat_address_summary">The address to connect to for chatting purposes</string>
+    <string name="chat_address_dialog_message">Setup the address to use for chatting</string>
+
+    <string name="err_send_pubkey">Could not send public key to server. Please check connection settings and try again.</string>
+    <string name="err_decode_server_pubkey">Server\'s public key could not be decoded.</string>
+    <string name="err_get_stream_id">Could not get stream ID from server.</string>
+    <string name="err_send_stream_file">Could not send stream to server.</string>
+    <string name="err_send_username">Could not send username to server.</string>
+    <string name="err_connect_server">Could not connect to server. Please check connection settings and try again.</string>
+    <string name="err_unknown">An unknown error occurred.</string>
+
+
 </resources>

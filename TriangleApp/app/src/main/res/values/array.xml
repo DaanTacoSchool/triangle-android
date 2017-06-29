@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="record_length_keys">
+        <item name="1000">1 Second</item>
+        <item name="2000">2 Seconds</item>
+        <item name="3000">3 Seconds</item>
+        <item name="4000">4 Seconds</item>
+        <item name="5000">5 Seconds</item>
+        <item name="6000">6 Seconds</item>
+        <item name="7000">7 Seconds</item>
+        <item name="8000">8 Seconds</item>
+        <item name="9000">9 Seconds</item>
+        <item name="10000">10 Seconds</item>
+    </string-array>
+
+    <string-array name="record_length_values">
+        <item name="1000">1000</item>
+        <item name="2000">2000</item>
+        <item name="3000">3000</item>
+        <item name="4000">4000</item>
+        <item name="5000">5000</item>
+        <item name="6000">6000</item>
+        <item name="7000">7000</item>
+        <item name="8000">8000</item>
+        <item name="9000">9000</item>
+        <item name="10000">10000</item>
+    </string-array>
+</resources>
